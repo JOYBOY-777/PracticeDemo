@@ -2,10 +2,19 @@ package com.jin.practice.lambda;
 
 import org.junit.Test;
 
-import java.util.Comparator;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class TestLambda {
+    List<Employee> emp = Arrays.asList(
+      new Employee("张三",18,11158),
+      new Employee("李四",59,525885),
+      new Employee("王五",241,5555878),
+      new Employee("赵六",23,57551)
+    );
+
+
     @Test
     //1.实现接口无参无返回值
     public void test(){
@@ -29,6 +38,18 @@ public class TestLambda {
         };
     }
 
+    @Test
+    public void test4(){
+        Collections.sort(emp,(e1,e2)->{
+            if(e1.getAge() == e2.getAge()){
+                return e1.getName().compareTo(e2.getName());
+            }else{
+                return Integer.compare(e1.getSalary(),e2.getSalary());
+            }
+        });
 
-
+        for (Employee employee : emp) {
+            System.out.println(employee);
+        }
+    }
 }

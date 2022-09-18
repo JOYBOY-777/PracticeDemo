@@ -64,7 +64,131 @@
        }
    ```
 
-   
+
+
+**需要函数式接口的支持**
+
+函数式接口：也就是接口中只有**一个抽象方法**的接口就是函数式接口
+
+lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪水比较
+
+```java
+    @Test
+    public void test4(){
+        Collections.sort(emp,(e1,e2)->{
+            if(e1.getAge() == e2.getAge()){
+                return e1.getName().compareTo(e2.getName());
+            }else{
+                return Integer.compare(e1.getSalary(),e2.getSalary());
+            }
+        });
+
+        for (Employee employee : emp) {
+            System.out.println(employee);
+        }
+    }
+}
+```
+
+
+
+## 四大内置核心函数式接口
+
+**1.Consumer<T>**:消费者接口（有去无回）
+
+​	void accept(T t);
+
+``` java
+    @Test
+    public void test(){
+        //Consumer接口
+        happy(1000,(x)-> System.out.println("我花了"+x+"元"));
+
+    }
+
+    public void happy(double money, Consumer<Double> con){
+        con.accept(money);
+    }
+```
+
+**2.Supplier<T>**:生产者接口
+
+​	T get();
+
+```java
+    @Test
+    public void test2(){
+        //Supplier接口
+        List<Integer> numList = getNumList(10, () -> (int) (Math.random() * 100));
+        for (Integer num : numList) {
+            System.out.println(num);
+        }
+    }
+
+    //产生指定的整数并放入集合中
+    public List<Integer> getNumList(int num, Supplier<Integer> sup){
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            list.add(sup.get());
+        }
+        return list;
+    }
+```
+
+
+
+**3.Function<T,R>**:函数式接口,把T传进来进行一些操作从而返回一个R出来,用于做一些数据处理的接口
+
+​	R apply(T t);
+
+```java
+    @Test
+    public void test3(){
+        //Function接口
+        System.out.println(strHandler("zz", (str) -> str.toUpperCase()));
+    }
+
+    //处理字符串需求
+    public String strHandler(String str, Function<String,String> fun){
+        return fun.apply(str);
+    }
+```
+
+
+
+**4.Predicate<T>:**断言型接口,是一个判断型接口，传进去一个t进行一些判断返回是否正确
+
+​	boolean test(T t);
+
+```java
+@Test
+    public void test4(){
+        List<String> list = Arrays.asList("zz","ss","qqq","scde");
+        //Predicate接口
+        List<String> strings = filterStr(list, (str) -> {
+            if (str.length() == 2) return true;
+            else return false;
+        });
+        for (String string : strings) {
+            System.out.println(string);
+        }
+    }
+
+    //将满足的字符串放入到集合中
+    public List<String> filterStr(List<String> list, Predicate<String> pre){
+        List<String> strList = new ArrayList<>();
+        for (String s : list) {
+            if(pre.test(s)){
+                strList.add(s);
+            }
+        }
+        return strList;
+    }
+```
+
+
+
+## 方法引用与构造器引用
 
 
 
