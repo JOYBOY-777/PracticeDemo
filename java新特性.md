@@ -243,9 +243,21 @@ lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪�
            BiPredicate<String,String> bi = (x,y)->x.equals(y);
            BiPredicate<String,String> bip = String::equals;
        }
+   
+ @Test
+       public void test3(){
+           List<String> list = Arrays.asList("aa","bb","cc","dd","ee");
+           list.stream()
+               	//注意下面两种的区别
+                   .map((x)->x.toUpperCase())
+                   .map(String::toUpperCase)
+                   .forEach(System.out::println);
+       }
    ```
-
-   当发现方法体中的参数**前后一个是方法的调用者，后一个是方法的参数时就可以用这种方式**，也就是类名::**实例**方法
+   
+   当发现方法体中的参数**前后一个是方法的调用者，后一个是方法的参数时就可以用这种方式**，也就是类名::**实例**方法,**或者是这个参数又完全的参与到后面的方法调用中，传进去一个参数，又用这个参数调用类中已经写好我的方法，这种情况也可以用类名::实例方法**
+   
+   **总之就是参数就是该方法的调用者就能这么写**
 
 
 
@@ -280,6 +292,54 @@ lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪�
 # Stream流
 
 ## 创建Stream流
+
+```java
+    @Test
+    public void test(){
+        //1.通过集合Collection系列集合获取
+        Stream<Employee> stream = emps.stream();
+        //2.通过Arrays.stream获取
+        Employee[] emp = new Employee[10];
+        Stream<Employee> stream1 = Arrays.stream(emp);
+        //3.通过stream中静态方法of获取流
+        Stream<String> stream2 = Stream.of("a", "b", "c");
+        //4.创建无限流
+        Stream<Integer> stream3 = Stream.iterate(0, (x) -> x + 2);
+        //5.生成流
+        Stream.generate(()->Math.random())
+                .limit(5)
+                .forEach(System.out::println);
+    }
+```
+
+## 筛选与切片
+
+```java
+    @Test
+    public void test2(){
+         emps.stream()
+                 //过滤操作里面传进去一个断言型的接口
+                 .filter(e->e.getAge()>25)
+                 //跳过符合条件的两个参数并输出剩下的部分
+                 .skip(2)
+                 //截取符合条件的前两个
+                 .limit(2)
+                 //去重操作
+                 .distinct()
+                 //遍历操作，里面传进去一个消费者类型接口
+                 .forEach(System.out::println);
+    }
+```
+
+## 映射(map flatMap)
+
+map:接收一个Function接口，将元素转化成其他元素或提取信息，这个Function会被用到**每个**元素上，并将其映射成一个新的元素，就是将每个元素都拿出来并用到这个函数上，然后**产生一个新流**并且得到结果
+
+flatMap:如果出现流中还有好多流的格式，那么用这个后就不用循环遍历了，直接忽视里面的流，把里面流中的元素拿到外面，避免了双层遍历
+
+```java
+
+```
 
 
 

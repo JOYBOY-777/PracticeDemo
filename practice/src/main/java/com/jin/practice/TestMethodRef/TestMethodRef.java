@@ -3,7 +3,7 @@ package com.jin.practice.TestMethodRef;
 import com.jin.practice.lambda.Employee;
 import org.junit.Test;
 
-import javax.annotation.processing.SupportedOptions;
+
 import java.io.PrintStream;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
