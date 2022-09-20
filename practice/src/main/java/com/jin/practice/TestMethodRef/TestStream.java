@@ -3,7 +3,9 @@ package com.jin.practice.TestMethodRef;
 import com.jin.practice.lambda.Employee;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -60,4 +62,40 @@ public class TestStream {
                 .map(Employee::getName)
                 .forEach(System.out::println);
     }
+
+    @Test
+    public void test5(){
+        List<Object> list = new ArrayList<>();
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+
+        List<Object> list2 = new ArrayList<>();
+        list2.add(1);
+        list2.add(1);
+        list2.add(1);
+        list2.add(list);
+        list2.addAll(list);
+        System.out.println(list2);
+    }
+
+    @Test
+    public void test6(){
+        List<String> list = Arrays.asList("aa","bb","fff","dd","ee");
+        list.stream()
+                //自然排序
+                .sorted()
+                //按照字符串长短排序
+                .sorted(Comparator.comparingInt(String::length))
+                .forEach(System.out::print);
+    }
+
+
+
+
+
+
+
+
 }

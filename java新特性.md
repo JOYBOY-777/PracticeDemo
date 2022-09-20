@@ -257,7 +257,7 @@ lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪�
    
    当发现方法体中的参数**前后一个是方法的调用者，后一个是方法的参数时就可以用这种方式**，也就是类名::**实例**方法,**或者是这个参数又完全的参与到后面的方法调用中，传进去一个参数，又用这个参数调用类中已经写好我的方法，这种情况也可以用类名::实例方法**
    
-   **总之就是参数就是该方法的调用者就能这么写**
+   **总之就是参数就是该方法的调用者就能这么写**,前面出现的参数又调用了后面已经写好的方法
 
 
 
@@ -335,10 +335,51 @@ lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪�
 
 map:接收一个Function接口，将元素转化成其他元素或提取信息，这个Function会被用到**每个**元素上，并将其映射成一个新的元素，就是将每个元素都拿出来并用到这个函数上，然后**产生一个新流**并且得到结果
 
-flatMap:如果出现流中还有好多流的格式，那么用这个后就不用循环遍历了，直接忽视里面的流，把里面流中的元素拿到外面，避免了双层遍历
+flatMap:如果出现流中还有好多流的格式，那么用这个后就不用循环遍历了，直接忽视里面的流，把里面流中的元素拿到外面，避免了双层遍历Stream<Stream<Character>>
 
 ```java
+@Test
+    public void test4(){
+        emps.stream()
+                .map(Employee::getName)
+                .forEach(System.out::println);
+    }
+```
 
+就跟下面的代码意思差不多
+
+```java
+@Test
+    public void test5(){
+        List<Object> list = new ArrayList<>();
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        list.add(1);
+        
+        List<Object> list2 = new ArrayList<>();
+        list2.add(1);
+        list2.add(1);
+        list2.add(1);
+        list2.add(list);
+        list2.addAll(list);
+        System.out.println(list2);
+    }
+```
+
+排序：
+
+```java
+	@Test
+    public void test6(){
+        List<String> list = Arrays.asList("aa","bb","fff","dd","ee");
+        list.stream()
+                //自然排序
+                .sorted()
+                //按照字符串长短排序
+                .sorted(Comparator.comparingInt(String::length))
+                .forEach(System.out::print);
+    }
 ```
 
 
