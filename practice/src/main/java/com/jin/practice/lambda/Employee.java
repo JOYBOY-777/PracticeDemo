@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Employee {
     String name;
     Integer age;
-    Integer salary;
+    Double salary;
     Status status;
 
     public enum Status{

@@ -243,37 +243,39 @@ lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪�
            BiPredicate<String,String> bi = (x,y)->x.equals(y);
            BiPredicate<String,String> bip = String::equals;
        }
-   
- @Test
-       public void test3(){
-           List<String> list = Arrays.asList("aa","bb","cc","dd","ee");
-           list.stream()
-               	//注意下面两种的区别
-                   .map((x)->x.toUpperCase())
-                   .map(String::toUpperCase)
-                   .forEach(System.out::println);
-       }
    ```
    
-   当发现方法体中的参数**前后一个是方法的调用者，后一个是方法的参数时就可以用这种方式**，也就是类名::**实例**方法,**或者是这个参数又完全的参与到后面的方法调用中，传进去一个参数，又用这个参数调用类中已经写好我的方法，这种情况也可以用类名::实例方法**
+   ```java
+   @Test
+          public void test3(){
+              List<String> list = Arrays.asList("aa","bb","cc","dd","ee");
+              list.stream()
+                  	//注意下面两种的区别
+                      .map((x)->x.toUpperCase())
+                      .map(String::toUpperCase)
+                      .forEach(System.out::println);
+          }
+   ```
    
-   **总之就是参数就是该方法的调用者就能这么写**,前面出现的参数又调用了后面已经写好的方法
-
-
+   当发现方法体中的参数**前后一个是方法的调用者，后一个是方法的参数时就可以用这种方式**，也就是类名::**实例**方法,**或者是这个参数又完全的参与到后面的方法调用中，传进去一个参数，又用这个参数调用类中已经写好我的方法，这种情况也可以用类名::实例方法** ,**总之就是参数就是该方法的调用者就能这么写**,前面出现的参数又调用了后面已经写好的方法
+   
+   
+   
 
 **构造器引用与数组引用语法格式**
 
-1. ClassName::new 
+1. 构造器引用：
 
    ```java
-      @Test
-       public void test4(){
-           Supplier<Employee> sup = () -> new Employee();
-           Supplier<Employee> sup1 = Employee::new;
-       }
+   //ClassName::new   
+   		@Test
+             public void test4(){
+                 Supplier<Employee> sup = () -> new Employee();
+                 Supplier<Employee> sup1 = Employee::new;
+             }
    ```
 
-   调用无参构造来实现，调用的那个构造器取决于使用前面接口中的参数
+​        调用无参构造来实现，调用的那个构造器取决于使用前面接口中的参数  
 
 2. 数组引用：
 
@@ -285,7 +287,7 @@ lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪�
        }
    ```
 
-   就是创建数组用的
+    就是创建数组用的
 
 
 
@@ -382,7 +384,80 @@ flatMap:如果出现流中还有好多流的格式，那么用这个后就不用
     }
 ```
 
+## 查找与匹配
 
+1. allMatch:检查是否匹配所有元素
+
+   ```java
+   @Test
+       public void test(){
+           //查看员工状态是否都是忙碌
+           System.out.println(emps.stream()
+                   .allMatch((e) -> e.getStatus().equals(Employee.Status.BUSY)));
+       }
+   ```
+
+2. anyMatch:检查是否有一个元素匹配
+
+   ```java
+   //查看员工有没有处于忙碌状态的
+   System.out.println(emps.stream()
+                   .anyMatch((e)->e.getStatus().equals(Employee.Status.BUSY)));
+   ```
+
+3. noneMatch:检查是否一个元素都不匹配
+
+   ```java
+   //查看是否一个元素都不匹配
+   System.out.println(emps.stream()
+                   .noneMatch((e)->e.getStatus().equals(Employee.Status.BUSY)));
+   ```
+
+4. findFirst:返回第一个元素
+
+   ```java
+   //返回流中第一个元素
+   System.out.println(emps.stream()
+                   .findFirst()
+                   .get());
+   ```
+
+5. findAny:返回当前流中的任意元素
+
+   ```java
+   //随便返回流中的一个元素
+   System.out.println(emps.stream()
+                   .findAny()
+                   .get());
+   ```
+
+6. count:返回流中元素的总个数
+
+   ```java
+   //返回流中个数
+   System.out.println(emps.stream()
+                   .count());
+   ```
+
+7. max:返回流中最小值
+
+   ```java
+   System.out.println(emps.stream()
+                   .max(Comparator.comparingDouble(Employee::getAge))
+                   .get());
+   ```
+
+   注意返回的是一个Optional用get取出里面的值
+
+8. min:返回流中最大值
+
+   ```java
+   System.out.println(emps.stream()
+                   .min(Comparator.comparingDouble(Employee::getAge))
+                   .get());
+   ```
+
+   
 
 
 

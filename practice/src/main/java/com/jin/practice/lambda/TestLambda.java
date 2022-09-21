@@ -8,10 +8,10 @@ import java.util.function.Predicate;
 
 public class TestLambda {
     List<Employee> emp = Arrays.asList(
-      new Employee("张三",18,11158),
-      new Employee("李四",59,525885),
-      new Employee("王五",241,5555878),
-      new Employee("赵六",23,57551)
+            new Employee("张三",26,58795, Employee.Status.BUSY),
+            new Employee("张三",26,58795, Employee.Status.FREE),
+            new Employee("张三",26,58795, Employee.Status.VOCATION),
+            new Employee("张三",26,58795, Employee.Status.BUSY)
     );
 
 
