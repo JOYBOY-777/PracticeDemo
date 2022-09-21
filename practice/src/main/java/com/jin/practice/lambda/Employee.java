@@ -11,4 +11,11 @@ public class Employee {
     String name;
     Integer age;
     Integer salary;
+    Status status;
+
+    public enum Status{
+        FREE,
+        BUSY,
+        VOCATION;
+    }
 }

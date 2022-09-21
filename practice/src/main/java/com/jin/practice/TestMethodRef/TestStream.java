@@ -11,10 +11,10 @@ import java.util.stream.Stream;
 
 public class TestStream {
     List<Employee> emps = Arrays.asList(
-            new Employee("张三",26,58795),
-                new Employee("张三",26,58795),
-                new Employee("张三",26,58795),
-                new Employee("张三",26,58795)
+            new Employee("张三",26,58795, Employee.Status.BUSY),
+                new Employee("张三",26,58795, Employee.Status.FREE),
+                new Employee("张三",26,58795, Employee.Status.VOCATION),
+                new Employee("张三",26,58795, Employee.Status.BUSY)
         );
     @Test
     public void test(){
