@@ -8,10 +8,10 @@ import java.util.function.Predicate;
 
 public class TestLambda {
     List<Employee> emp = Arrays.asList(
-            new Employee("张三",26,58795, Employee.Status.BUSY),
-            new Employee("张三",26,58795, Employee.Status.FREE),
-            new Employee("张三",26,58795, Employee.Status.VOCATION),
-            new Employee("张三",26,58795, Employee.Status.BUSY)
+            new Employee("张三",26,58795.0, Employee.Status.BUSY),
+            new Employee("张三",26,58795.00, Employee.Status.FREE),
+            new Employee("张三",26,58795.0, Employee.Status.VOCATION),
+            new Employee("张三",26,58795.0, Employee.Status.BUSY)
     );
 
 
@@ -44,7 +44,7 @@ public class TestLambda {
             if(e1.getAge() == e2.getAge()){
                 return e1.getName().compareTo(e2.getName());
             }else{
-                return Integer.compare(e1.getSalary(),e2.getSalary());
+                return Double.compare(e1.getSalary(),e2.getSalary());
             }
         });
 

@@ -457,9 +457,84 @@ flatMap:如果出现流中还有好多流的格式，那么用这个后就不用
                    .get());
    ```
 
-   
+
+## 规约与收集
+
+**reduce**
+
+1. reduce:可以将流中元素反复结合起来，得到一个值
+
+   ```java
+       @Test
+       public void test(){
+           List<Integer> list = Arrays.asList(1,2,3,4,5,6,7,8,9);
+           Integer reduce = list.stream()
+                   .reduce(0, (x, y) -> x + y);
+           System.out.println(reduce);
+       }
+   ```
+
+   得到结果45
+
+   获取工资的总和：
+
+   ```java
+       @Test
+       public void test1(){
+           //获取工资的总和
+           Double reduce = emps.stream()
+                   //映射工资
+                   .map(Employee::getSalary)
+                   .reduce((double) 0, (e1, e2) -> e1 + e2);
+           System.out.println(reduce);
+       }
+   ```
+
+   ```java
+           //一个参数的重载方法
+           Optional<Double> aDouble = emps.stream()
+                   .map(Employee::getSalary)
+                   .reduce(Double::sum);
+           System.out.println(aDouble.get());
+   ```
+
+   因为最后获取到的值有可能是空的
 
 
+
+**collect**:用于给stream中的元素做汇总
+
+```java
+    @Test
+    public void test2(){
+        emps.stream()
+                .map(Employee::getName)
+                .collect(Collectors.toList())
+                .forEach(System.out::println);
+    }
+```
+
+把名字提取出来之后放到一个List集合中
+
+```java
+			emps.stream()
+                .map(Employee::getName)
+                .collect(Collectors.toSet())
+                .forEach(System.out::println);
+```
+
+放到set中去重
+
+```java
+ emps.stream()
+                .map(Employee::getName)
+                .collect(Collectors.toCollection(HashSet::new))
+                .forEach(System.out::println);
+```
+
+放到自定义集合中去以hashset举例
+
+ 
 
 
 
