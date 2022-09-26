@@ -9,10 +9,10 @@ import java.util.stream.Collectors;
 public class TestSteam2 {
     List<Employee> emps = Arrays.asList(
             new Employee("张c三",26,558795.00, Employee.Status.BUSY),
-            new Employee("张a三",26,58795.00, Employee.Status.FREE),
-            new Employee("张444三",26,58795.00, Employee.Status.FREE),
+            new Employee("张a三",86,58795.00, Employee.Status.FREE),
+            new Employee("张444三",46,58795.00, Employee.Status.FREE),
             new Employee("张7985三",26,58795.00, Employee.Status.FREE),
-            new Employee("张s三",26,58795.00, Employee.Status.VOCATION),
+            new Employee("张s三",36,58795.00, Employee.Status.VOCATION),
             new Employee("张s三",21,587.00, Employee.Status.BUSY)
     );
     @Test
@@ -79,6 +79,53 @@ public class TestSteam2 {
         Map<Employee.Status, List<Employee>> collect = emps.stream()
                 .collect(Collectors.groupingBy(Employee::getStatus));
         System.out.println(collect);
+        System.out.println("================================");
+        Map<Employee.Status, Map<String, List<Employee>>> map = emps.stream()
+                .collect(Collectors.groupingBy(Employee::getStatus, Collectors.groupingBy((e) -> {
+                    if (e.getAge() <= 35) {
+                        return "青年";
+                    } else if (e.getAge() <= 50) {
+                        return "中年";
+                    } else return "老年";
+                })));
+        System.out.println(map);
+    }
+
+    @Test
+    public void test5(){
+        Map<Boolean, List<Employee>> collect = emps.stream()
+                .collect(Collectors.partitioningBy(e -> e.getSalary() > 8000));
+        System.out.println(collect);
+        System.out.println("===========================");
+        DoubleSummaryStatistics collect1 = emps.stream()
+                .collect(Collectors.summarizingDouble(Employee::getSalary));
+        System.out.println(collect1.getMax());
+        System.out.println(collect1.getAverage());
+        System.out.println("=====================");
+        String collect2 = emps.stream()
+                .map(Employee::getName)
+                .collect(Collectors.joining(","));
+        System.out.println(collect2);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -108,4 +155,4 @@ public class TestSteam2 {
 
 
 
-}
+

@@ -584,9 +584,47 @@ Optional<Employee> collect3 = emps.stream()
 
 通过员工的状态分组，注意前面的接收条件
 
+```java
+  Map<Employee.Status, Map<String, List<Employee>>> map = emps.stream()
+                .collect(Collectors.groupingBy(Employee::getStatus, Collectors.groupingBy((e) -> {
+                    if (e.getAge() <= 35) {
+                        return "青年";
+                    } else if (e.getAge() <= 50) {
+                        return "中年";
+                    } else return "老年";
+                })));
+```
 
+**多级分组**首先先按照状态分组，状态相同的在按照年龄分
 
+```java
+    @Test
+    public void test5(){
+        Map<Boolean, List<Employee>> collect = emps.stream()
+                .collect(Collectors.partitioningBy(e -> e.getSalary() > 8000));
+        System.out.println(collect);
+    }
+```
 
+按照薪水分区，>8000的是一组,<8000的是一组，分为true和false注意看返回值
+
+```java
+  DoubleSummaryStatistics collect1 = emps.stream()
+                .collect(Collectors.summarizingDouble(Employee::getSalary));
+        System.out.println(collect1.getMax());
+        System.out.println(collect1.getAverage());
+```
+
+获取一个返回值中包含最大，最小等很多方法**summarizingDouble**更像是一种聚合API
+
+```java
+String collect2 = emps.stream()
+                .map(Employee::getName)
+                .collect(Collectors.joining());
+        System.out.println(collect2);
+```
+
+连接字符串
 
 
 
