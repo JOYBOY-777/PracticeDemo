@@ -8,10 +8,12 @@ import java.util.stream.Collectors;
 
 public class TestSteam2 {
     List<Employee> emps = Arrays.asList(
-            new Employee("张c三",26,58795.00, Employee.Status.BUSY),
+            new Employee("张c三",26,558795.00, Employee.Status.BUSY),
             new Employee("张a三",26,58795.00, Employee.Status.FREE),
+            new Employee("张444三",26,58795.00, Employee.Status.FREE),
+            new Employee("张7985三",26,58795.00, Employee.Status.FREE),
             new Employee("张s三",26,58795.00, Employee.Status.VOCATION),
-            new Employee("张s三",21,58795.00, Employee.Status.BUSY)
+            new Employee("张s三",21,587.00, Employee.Status.BUSY)
     );
     @Test
     public void test(){
@@ -62,6 +64,21 @@ public class TestSteam2 {
         Double collect1 = emps.stream()
                 .collect(Collectors.averagingDouble(Employee::getSalary));
         System.out.println(collect1);
+        System.out.println("====================");
+        Double collect2 = emps.stream()
+                .collect(Collectors.summingDouble(Employee::getSalary));
+        System.out.println(collect2);
+        System.out.println("====================");
+        Optional<Employee> collect3 = emps.stream()
+                .collect(Collectors.maxBy((e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary())));
+        System.out.println(collect3.get());
+    }
+
+    @Test
+    public void test4(){
+        Map<Employee.Status, List<Employee>> collect = emps.stream()
+                .collect(Collectors.groupingBy(Employee::getStatus));
+        System.out.println(collect);
     }
 
 

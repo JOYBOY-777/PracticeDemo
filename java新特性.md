@@ -232,35 +232,36 @@ lambda简单使用：年龄一样按照名字比较，年龄不一样按照薪�
        public void test2(){
            Comparator<Integer> comp = (x,y)->Integer.compare(x,y);
            Comparator<Integer> com = Integer::compare;
-       }
+   }
    ```
+
+   或者入参就是实现体中静态方法的参数
 
 3. 类::实例方法名
 
-   ```java
-    @Test
+```java
+ @Test
+    public void test3(){
+        BiPredicate<String,String> bi = (x,y)->x.equals(y);
+        BiPredicate<String,String> bip = String::equals;
+    }
+```
+
+```java
+@Test
        public void test3(){
-           BiPredicate<String,String> bi = (x,y)->x.equals(y);
-           BiPredicate<String,String> bip = String::equals;
+           List<String> list = Arrays.asList("aa","bb","cc","dd","ee");
+           list.stream()
+               	//注意下面两种的区别
+                   .map((x)->x.toUpperCase())
+                   .map(String::toUpperCase)
+                   .forEach(System.out::println);
        }
-   ```
-   
-   ```java
-   @Test
-          public void test3(){
-              List<String> list = Arrays.asList("aa","bb","cc","dd","ee");
-              list.stream()
-                  	//注意下面两种的区别
-                      .map((x)->x.toUpperCase())
-                      .map(String::toUpperCase)
-                      .forEach(System.out::println);
-          }
-   ```
-   
-   当发现方法体中的参数**前后一个是方法的调用者，后一个是方法的参数时就可以用这种方式**，也就是类名::**实例**方法,**或者是这个参数又完全的参与到后面的方法调用中，传进去一个参数，又用这个参数调用类中已经写好我的方法，这种情况也可以用类名::实例方法** ,**总之就是参数就是该方法的调用者就能这么写**,前面出现的参数又调用了后面已经写好的方法
-   
-   
-   
+```
+
+当发现方法体中的参数**前后一个是方法的调用者，后一个是方法的参数时就可以用这种方式**，也就是类名::**实例**方法,**或者是这个参数又完全的参与到后面的方法调用中，传进去一个参数，又用这个参数调用类中已经写好我的方法，这种情况也可以用类名::实例方法** ,**总之就是参数就是该方法的调用者就能这么写**,前面出现的参数又调用了后面已经写好的方法
+
+
 
 **构造器引用与数组引用语法格式**
 
@@ -534,9 +535,54 @@ flatMap:如果出现流中还有好多流的格式，那么用这个后就不用
 
 放到自定义集合中去以hashset举例
 
- 
+ ```java
+ Long collect = emps.stream()
+                .collect(Collectors.counting());
+ ```
 
+获取总数
 
+```java
+ Double collect1 = emps.stream()
+                .collect(Collectors.averagingDouble(Employee::getSalary));
+```
+
+获取薪水平均值
+
+```java
+ Double collect2 = emps.stream()
+                .collect(Collectors.summingDouble(Employee::getSalary));
+        System.out.println(collect2);
+```
+
+获取工资总和
+
+```java
+Optional<Employee> collect3 = emps.stream()
+                .collect(Collectors.maxBy((e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary())));
+        System.out.println(collect3.get());
+```
+
+获取最大值
+
+```java
+Optional<Employee> collect3 = emps.stream()
+                .collect(Collectors.minBy((e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary())));
+        System.out.println(collect3.get());
+```
+
+获取最小值，这两种做法其实还不如直接用stream().min/max
+
+```java
+    @Test
+    public void test4(){
+        Map<Employee.Status, List<Employee>> collect = emps.stream()
+                .collect(Collectors.groupingBy(Employee::getStatus));
+        System.out.println(collect);
+    }
+```
+
+通过员工的状态分组，注意前面的接收条件
 
 
 
