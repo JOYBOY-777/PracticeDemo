@@ -1,8 +1,11 @@
 package com.jin.practice.ForkJoin;
 
+import org.junit.Test;
+
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
+import java.util.stream.LongStream;
 
 /*
 * 使用forkjoin框架实现数的累加操作
@@ -42,6 +45,14 @@ public class  ForkJoinCalculate extends RecursiveTask<Long> {
             //合并
             return left.join()+right.join();
         }
+    }
+
+    @Test
+    //java 8中的并行流
+    public void test(){
+        LongStream.rangeClosed(0,100000000000L)
+                .parallel()
+                .reduce(0,Long::sum);
     }
 }
 
