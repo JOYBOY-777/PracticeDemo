@@ -51,6 +51,7 @@ public class  ForkJoinCalculate extends RecursiveTask<Long> {
     //java 8中的并行流
     public void test(){
         LongStream.rangeClosed(0,100000000000L)
+                //并行流
                 .parallel()
                 .reduce(0,Long::sum);
     }

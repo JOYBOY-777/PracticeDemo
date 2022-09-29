@@ -687,6 +687,24 @@ class test{
 
 
 
+在java8中直接利用封装好的api进行调用
+
+```java
+    @Test
+    //java 8中的并行流
+    public void test(){
+        LongStream.rangeClosed(0,100000000000L)
+                //顺行流
+                //.sequential()
+                .parallel()
+                .reduce(0,Long::sum);
+    }
+```
+
+
+
+
+
 
 
 
