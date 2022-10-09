@@ -55,6 +55,7 @@ public class  ForkJoinCalculate extends RecursiveTask<Long> {
                 .parallel()
                 .reduce(0,Long::sum);
     }
+
 }
 
 
