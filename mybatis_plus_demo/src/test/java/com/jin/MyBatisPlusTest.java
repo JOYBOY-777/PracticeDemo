@@ -68,4 +68,42 @@ public class MyBatisPlusTest {
         System.out.println(userMapper.deleteBatchIds(Arrays.asList(2l, 4l)));
     }
 
+    @Test
+    //测试update方法,传入一个实体类，只需要把里面的Id设置好，就可以根据这个id进行修改
+    public void testUpdate(){
+        User user = new User();
+        user.setId(7l);
+        user.setName("石穿空");
+        user.setAge(15151);
+        user.setEmail("zzzzz.com");
+        System.out.println(userMapper.updateById(user));
+    }
+
+    @Test
+    //测试查询方法
+    public void testSelect(){
+        //根据id查询
+        System.out.println(userMapper.selectById(7l).toString());
+        System.out.println("==================");
+        //根据多个id查询
+        userMapper.selectBatchIds(Arrays.asList(1l,5l,7l,8l)).forEach(System.out::println);
+    }
+
+    @Test
+    //根据map集合进行查询
+    public void testMapSelect(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("name","石穿空");
+        map.put("age","15151");
+        userMapper.selectByMap(map).forEach(System.out::println);
+        //查询所有数据
+        userMapper.selectList(null).forEach(System.out::println);
+    }
+
+    @Test
+    //自定义功能写xml进行查询
+    public void testSelectMapById(){
+        Map<String, Object> map = userMapper.selectMapById(7l);
+        System.out.println(map);
+    }
 }
