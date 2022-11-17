@@ -16,3 +16,8 @@ mybatis-plus:
   configuration:
     #日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#设置mybatis-Plus全局配置
+#  global-config:
+#    db-config:
+#      table-prefix: 这个是配置表名的统一前缀
