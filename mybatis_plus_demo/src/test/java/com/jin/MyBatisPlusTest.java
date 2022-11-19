@@ -39,7 +39,7 @@ public class MyBatisPlusTest {
     @Test
     //测试直接传入id，根据id进行字段的删除
     public void testDelete(){
-        System.out.println(userMapper.deleteById(6L));
+        System.out.println(userMapper.deleteById(7L));
     }
     @Test
     //测试根据map删除

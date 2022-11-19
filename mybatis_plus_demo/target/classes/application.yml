@@ -18,6 +18,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #设置mybatis-Plus全局配置
-#  global-config:
-#    db-config:
-#      table-prefix: 这个是配置表名的统一前缀
+  global-config:
+    db-config:
+      id-type: auto
+    #配置全局的主键生成策略
